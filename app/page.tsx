@@ -11,6 +11,7 @@ import { RelevantDocuments } from "@/components/relevant-documents";
 import { submitQuery } from "@/api/services/api";
 import { Document} from "@/api/types/api";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export default function Home() {
     const textareaId = useId();
     const [answer, setAnswer] = useState("");
