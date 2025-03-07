@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { PDFPagePreview } from '@/components/pdf-page-preview';
 import { Document } from '@/api/types/api';
 import { Button } from '@/components/ui/button';
+import { getEmbedUrl } from '@/utils/pdf-utils';
 
 interface PdfPreviewModalProps {
   document: Document;
@@ -35,8 +36,10 @@ export function PdfPreviewModal({ document, isOpen, onClose }: PdfPreviewModalPr
   };
 
   const openFullDocument = () => {
+    // Use the embed URL for Google Drive files
+    const embedUrl = getEmbedUrl(document.url);
     // Open the document at the specific page
-    window.open(`${document.url}#page=${currentPage}`, '_blank');
+    window.open(`${embedUrl}#page=${currentPage}`, '_blank');
   };
 
   return (
@@ -57,7 +60,7 @@ export function PdfPreviewModal({ document, isOpen, onClose }: PdfPreviewModalPr
         </button>
         
         {/* PDF Preview */}
-        <div className="flex-1 p-8 overflow-auto">
+        <div className="flex-1 p-8 overflow-hidden" style={{ height: '70vh' }}>
           <PDFPagePreview 
             url={document.url} 
             page={currentPage} 
